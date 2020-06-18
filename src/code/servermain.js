@@ -9,13 +9,13 @@ const PORT = process.env.PORT || 8081;
 // const SERVER_URL =
 // 'https://sleepy-sands-27635.herokuapp.com/';
 
-const cars = [];
+const cars = new Set();
 
 server.on('connection', function (socket) {
   // console.log(`new user: ${socket.id}`);
   cars.forEach((i) => { server.to(i).emit('addCar', socket.id); });
   cars.forEach((i) => { server.to(socket.id).emit('addCar', i); });
-  cars.push(socket.id);
+  cars.add(socket.id);
   cars.forEach((i) => { server.to(i).emit('updateAll'); });
 
   socket.on('update', (speed, x, y, z, angle, wheelRotY) => {
@@ -43,6 +43,12 @@ server.on('connection', function (socket) {
         server.to(i).emit('wheelRotYSet', socket.id, wheelRotY);
       }
     });
+  });
+
+  socket.on('disconnect', () => {
+    cars.delete(socket.id);
+    cars.forEach((i) => { server.to(i).emit('delCar', socket.id); });
+    cars.forEach((i) => { server.to(i).emit('updateAll'); });
   });
 });
 
