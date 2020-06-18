@@ -1,0 +1,16 @@
+{
+  "name": "02",
+  "version": "1.0.0",
+  "description": "",
+  "main": "./src/code/main.js",
+  "dependencies": {
+    "socket.io": "^2.3.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "start": "node src/code/server/servermain.js",
+    "comserv": "git add . && git commit -m \"some fixes\" && git push -u origin master && git push heroku master"
+  },
+  "author": "",
+  "license": "ISC"
+}
