@@ -2,8 +2,9 @@
   "name": "02",
   "version": "1.0.0",
   "description": "",
-  "main": "./src/code/main.js",
+  "main": "./src/code/servermain.js",
   "dependencies": {
+    "express": "^4.17.1",
     "socket.io": "^2.3.0"
   },
   "devDependencies": {},

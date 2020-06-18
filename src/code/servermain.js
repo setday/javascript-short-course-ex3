@@ -4,20 +4,22 @@ const io = require('socket.io');
 const server = io(http);
 const PORT = process.env.PORT || 8081;
 
-console.log('start');
+// console.log('start');
 
-const SERVER_URL =
-'https://sleepy-sands-27635.herokuapp.com/';
+// const SERVER_URL =
+// 'https://sleepy-sands-27635.herokuapp.com/';
 
 const cars = [];
 
 server.on('connection', function (socket) {
+  // console.log(`new user: ${socket.id}`);
   cars.forEach((i) => { server.to(i).emit('addCar', socket.id); });
   cars.forEach((i) => { server.to(socket.id).emit('addCar', i); });
   cars.push(socket.id);
   cars.forEach((i) => { server.to(i).emit('updateAll'); });
 
   socket.on('update', (speed, x, y, z, angle, wheelRotY) => {
+  // console.log(`update all: ${socket.id}`);
     cars.forEach((i) => {
       if (i !== socket.id) {
         server.to(i).emit('update', socket.id, speed, x, y, z, angle, wheelRotY);
@@ -26,6 +28,7 @@ server.on('connection', function (socket) {
   });
 
   socket.on('speedSet', (speed) => {
+    // console.log(`change speed: ${socket.id}, ${speed}`);
     cars.forEach((i) => {
       if (i !== socket.id) {
         server.to(i).emit('speedSet', socket.id, speed);
@@ -34,6 +37,7 @@ server.on('connection', function (socket) {
   });
 
   socket.on('wheelRotYSet', (wheelRotY) => {
+    // console.log(`wheel rot: ${socket.id}`);
     cars.forEach((i) => {
       if (i !== socket.id) {
         server.to(i).emit('wheelRotYSet', socket.id, wheelRotY);
