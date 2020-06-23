@@ -59,7 +59,3 @@ app.get('/', (req, res) => {
 http.listen(PORT, () => {
   console.log(`listening on *:${PORT}`);
 });
-
-setInterval(() => {
-  cars.forEach((i) => { server.to(i).emit('updateAll'); });
-}, 100);
