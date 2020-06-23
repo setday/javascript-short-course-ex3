@@ -62,4 +62,4 @@ http.listen(PORT, () => {
 
 setInterval(() => {
   cars.forEach((i) => { server.to(i).emit('updateAll'); });
-}, 1);
+}, 50);
